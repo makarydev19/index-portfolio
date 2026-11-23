@@ -1,0 +1,633 @@
+@import "tailwindcss";
+
+/* ------------------------------------------------------------------ */
+/* Design tokens (DESIGN.md §2)                                         */
+/* ------------------------------------------------------------------ */
+@theme {
+  /* Colour — 60 / 30 / 10 */
+  --color-paper: #f2f1ed;
+  --color-paper-2: #e4e2dc;
+  --color-ink: #0d0d0d;
+  --color-ink-2: #161616;
+  --color-muted: #5e5d59;
+  --color-muted-dark: #8c8a85;
+  --color-signal: #ff3b14;
+  --color-signal-text: #c4240a;
+  --color-rule: #0d0d0d;
+
+  /* Fonts (next/font variables are set on <html> in layout.tsx) */
+  --font-display: var(--font-inter-tight), "Helvetica Neue", Arial, sans-serif;
+  --font-mono: var(--font-jetbrains-mono), ui-monospace, SFMono-Regular, Menlo, monospace;
+
+  /* Breakpoints: base 0 · md 768 · lg 1024 · xl 1440 */
+  --breakpoint-xl: 90rem;
+
+  /* Fluid type scale */
+  --text-mega: clamp(4.5rem, 1rem + 15vw, 17rem);
+  --text-mega--line-height: 0.82;
+  --text-mega--letter-spacing: -0.055em;
+  --text-mega--font-weight: 500;
+
+  --text-display-xl: clamp(3rem, 1.2rem + 7vw, 8.5rem);
+  --text-display-xl--line-height: 0.9;
+  --text-display-xl--letter-spacing: -0.045em;
+  --text-display-xl--font-weight: 500;
+
+  --text-display-l: clamp(2.25rem, 1.1rem + 3.6vw, 4.75rem);
+  --text-display-l--line-height: 1;
+  --text-display-l--letter-spacing: -0.035em;
+  --text-display-l--font-weight: 500;
+
+  --text-lead: clamp(1.75rem, 1.1rem + 2.4vw, 3.25rem);
+  --text-lead--line-height: 1.15;
+  --text-lead--letter-spacing: -0.02em;
+  --text-lead--font-weight: 500;
+
+  --text-h2: clamp(1.75rem, 1.2rem + 1.8vw, 3rem);
+  --text-h2--line-height: 1.05;
+  --text-h2--letter-spacing: -0.025em;
+  --text-h2--font-weight: 500;
+
+  --text-h3: clamp(1.25rem, 1.05rem + 0.6vw, 1.75rem);
+  --text-h3--line-height: 1.2;
+  --text-h3--letter-spacing: -0.015em;
+  --text-h3--font-weight: 500;
+
+  --text-body-l: clamp(1.125rem, 1rem + 0.35vw, 1.375rem);
+  --text-body-l--line-height: 1.45;
+  --text-body-l--letter-spacing: -0.01em;
+
+  --text-body: clamp(1rem, 0.95rem + 0.15vw, 1.0625rem);
+  --text-body--line-height: 1.55;
+  --text-body--letter-spacing: 0;
+
+  --text-mono: 0.8125rem;
+  --text-mono--line-height: 1.4;
+  --text-mono--letter-spacing: 0.06em;
+
+  --text-mono-s: 0.75rem;
+  --text-mono-s--line-height: 1.4;
+  --text-mono-s--letter-spacing: 0.08em;
+
+  /* Motion */
+  --ease-out-expo: cubic-bezier(0.16, 1, 0.3, 1);
+  --ease-in-out-quart: cubic-bezier(0.76, 0, 0.24, 1);
+  --ease-out-quart: cubic-bezier(0.25, 1, 0.5, 1);
+  --ease-in-quart: cubic-bezier(0.5, 0, 0.75, 0);
+
+  /* Radii */
+  --radius-none: 0;
+  --radius-pill: 999px;
+}
+
+/* ------------------------------------------------------------------ */
+/* Non-utility tokens                                                   */
+/* ------------------------------------------------------------------ */
+:root {
+  --space-1: 4px;
+  --space-2: 8px;
+  --space-3: 12px;
+  --space-4: 16px;
+  --space-5: 20px;
+  --space-6: 24px;
+  --space-8: 32px;
+  --space-10: 40px;
+  --space-12: 48px;
+  --space-16: 64px;
+  --space-24: 96px;
+  --space-32: 128px;
+  --space-48: 192px;
+
+  --section-y: clamp(96px, 6rem + 6vw, 192px);
+  --header-h: 60px;
+
+  --dur-xs: 150ms;
+  --dur-s: 300ms;
+  --dur-m: 600ms;
+  --dur-l: 900ms;
+  --dur-xl: 1200ms;
+
+  /* Grid */
+  --cols: 4;
+  --gutter: 16px;
+  --margin: 16px;
+}
+
+@media (min-width: 768px) {
+  :root {
+    --cols: 8;
+    --gutter: 20px;
+    --margin: 32px;
+    --header-h: 72px;
+  }
+}
+
+@media (min-width: 1024px) {
+  :root {
+    --cols: 12;
+    --gutter: 24px;
+    --margin: 40px;
+  }
+}
+
+@media (min-width: 1440px) {
+  :root {
+    --margin: 48px;
+  }
+}
+
+/* ------------------------------------------------------------------ */
+/* Base                                                                 */
+/* ------------------------------------------------------------------ */
+@layer base {
+  html {
+    background: var(--color-paper);
+    color: var(--color-ink);
+    -webkit-text-size-adjust: 100%;
+  }
+
+  body {
+    font-family: var(--font-display);
+    font-size: var(--text-body);
+    line-height: var(--text-body--line-height);
+    background: var(--color-paper);
+    color: var(--color-ink);
+    overflow-x: clip;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
+  h1,
+  h2,
+  h3,
+  h4 {
+    text-wrap: balance;
+    font-feature-settings: "ss01", "cv11";
+  }
+
+  p {
+    text-wrap: pretty;
+  }
+
+  ::selection {
+    background: var(--color-ink);
+    color: var(--color-paper);
+  }
+
+  /* Focus (DESIGN.md §7) */
+  :focus-visible {
+    outline: 2px solid var(--color-signal);
+    outline-offset: 3px;
+  }
+
+  .on-ink :focus-visible {
+    outline-color: var(--color-paper);
+    box-shadow: 0 0 0 2px var(--color-signal);
+  }
+}
+
+/* ------------------------------------------------------------------ */
+/* Utilities                                                            */
+/* ------------------------------------------------------------------ */
+@utility grid-site {
+  display: grid;
+  grid-template-columns: repeat(var(--cols), minmax(0, 1fr));
+  column-gap: var(--gutter);
+  padding-inline: var(--margin);
+  width: 100%;
+  max-width: calc(1680px + 2 * var(--margin));
+  margin-inline: auto;
+}
+
+@utility wrap-site {
+  padding-inline: var(--margin);
+  width: 100%;
+  max-width: calc(1680px + 2 * var(--margin));
+  margin-inline: auto;
+}
+
+@utility py-section {
+  padding-block: var(--section-y);
+}
+
+@utility pt-section {
+  padding-top: var(--section-y);
+}
+
+@utility pb-section {
+  padding-bottom: var(--section-y);
+}
+
+@utility mono {
+  font-family: var(--font-mono);
+  font-size: var(--text-mono);
+  line-height: var(--text-mono--line-height);
+  letter-spacing: var(--text-mono--letter-spacing);
+  font-weight: 400;
+  text-transform: uppercase;
+  font-variant-numeric: tabular-nums;
+}
+
+@utility mono-s {
+  font-family: var(--font-mono);
+  font-size: var(--text-mono-s);
+  line-height: var(--text-mono-s--line-height);
+  letter-spacing: var(--text-mono-s--letter-spacing);
+  font-weight: 400;
+  text-transform: uppercase;
+  font-variant-numeric: tabular-nums;
+}
+
+@utility display-features {
+  font-feature-settings: "ss01", "cv11";
+}
+
+@utility measure {
+  max-width: 60ch;
+}
+
+/* Visually hidden (screen-reader only) helper is Tailwind's `sr-only`. */
+
+/* ------------------------------------------------------------------ */
+/* Components                                                           */
+/* ------------------------------------------------------------------ */
+@layer components {
+  /* Pass-through underline: underlined by default; on hover the line exits
+     to the right and re-enters from the left (DESIGN.md §5.8). */
+  .link-u {
+    position: relative;
+    display: inline-block;
+    text-decoration: none;
+  }
+  .link-u::before,
+  .link-u::after {
+    content: "";
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: -0.08em;
+    height: max(1px, 0.06em);
+    background: currentColor;
+    pointer-events: none;
+  }
+  .link-u::before {
+    transform-origin: right;
+    transform: scaleX(1);
+    transition: transform var(--dur-s) var(--ease-out-quart) var(--dur-s);
+  }
+  .link-u::after {
+    transform-origin: left;
+    transform: scaleX(0);
+    transition: transform var(--dur-s) var(--ease-out-quart);
+  }
+  .link-u:hover::before,
+  .link-u:focus-visible::before {
+    transform: scaleX(0);
+    transition-delay: 0s;
+  }
+  .link-u:hover::after,
+  .link-u:focus-visible::after {
+    transform: scaleX(1);
+    transition-delay: var(--dur-s);
+  }
+
+  /* Hover underline: no line at rest, grows from the left on hover. */
+  .link-h {
+    position: relative;
+    display: inline-block;
+  }
+  .link-h::after {
+    content: "";
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: -0.15em;
+    height: 1px;
+    background: currentColor;
+    transform: scaleX(0);
+    transform-origin: right;
+    transition: transform var(--dur-s) var(--ease-out-quart);
+    pointer-events: none;
+  }
+  .link-h:hover::after,
+  .link-h:focus-visible::after {
+    transform: scaleX(1);
+    transform-origin: left;
+  }
+
+  /* Arrow rotation on hover of a parent .group */
+  .arrow-rot {
+    transition: transform var(--dur-s) var(--ease-out-quart);
+  }
+
+  /* ---------------- Work index rows (home) ---------------- */
+  .work-row {
+    position: relative;
+    transition: opacity var(--dur-s) var(--ease-out-quart);
+  }
+  .work-row__link {
+    position: relative;
+    isolation: isolate;
+  }
+  .work-row__link:focus-visible {
+    outline-offset: -2px;
+  }
+  .work-row__wipe {
+    position: absolute;
+    inset: 0;
+    z-index: -1;
+    background: var(--color-paper-2);
+    transform: scaleY(0);
+    transform-origin: top;
+    transition: transform 500ms var(--ease-out-expo);
+  }
+  .work-row__num {
+    /* Muted at rest here (not via a text-muted utility, which would beat the hover colour). */
+    color: var(--color-muted);
+    transition: color var(--dur-xs) linear;
+  }
+  .work-row__title {
+    display: inline-block;
+    transition: transform var(--dur-m) var(--ease-out-expo);
+  }
+  @media (hover: hover) and (pointer: fine) {
+    .work-list:hover .work-row:not(:hover),
+    .work-list:has(.work-row__link:focus-visible) .work-row:not(:focus-within) {
+      opacity: 0.3;
+    }
+    .work-row__link:hover .work-row__wipe,
+    .work-row__link:focus-visible .work-row__wipe {
+      transform: scaleY(1);
+      transform-origin: bottom;
+    }
+  }
+  .work-row__link:hover .work-row__num,
+  .work-row__link:focus-visible .work-row__num {
+    color: var(--color-signal-text);
+  }
+  @media (min-width: 1024px) {
+    .work-row__link:hover .work-row__num,
+    .work-row__link:focus-visible .work-row__num {
+      color: var(--color-signal);
+    }
+    .work-row__link:hover .work-row__title,
+    .work-row__link:focus-visible .work-row__title {
+      transform: translateX(24px);
+    }
+  }
+  .work-row__link:hover .arrow-rot,
+  .work-row__link:focus-visible .arrow-rot {
+    transform: rotate(45deg);
+  }
+
+  /* ---------------- Work cards (/work) ---------------- */
+  .work-card__media {
+    transition: transform var(--dur-l) var(--ease-out-expo);
+  }
+  .work-card__title {
+    display: inline-block;
+    transition: transform var(--dur-m) var(--ease-out-expo);
+  }
+  .work-card__bar {
+    transform: scaleX(0);
+    transform-origin: left;
+    transition: transform var(--dur-m) var(--ease-out-expo);
+  }
+  .work-card:hover .work-card__media,
+  .work-card:focus-visible .work-card__media {
+    transform: scale(1.04);
+  }
+  .work-card:hover .work-card__title,
+  .work-card:focus-visible .work-card__title {
+    transform: translateX(12px);
+  }
+  .work-card:hover .work-card__bar,
+  .work-card:focus-visible .work-card__bar {
+    transform: scaleX(1);
+  }
+  .work-card:hover .arrow-rot,
+  .work-card:focus-visible .arrow-rot {
+    transform: rotate(45deg);
+  }
+
+  /* ---------------- Next project (case) ---------------- */
+  .next-project__title {
+    display: inline-block;
+    transition: transform var(--dur-m) var(--ease-out-expo);
+  }
+  .next-project:hover .next-project__title,
+  .next-project:focus-visible .next-project__title {
+    transform: translateX(32px);
+  }
+
+  /* ---------------- Magnetic button (CSS fallback state) ---------------- */
+
+  /* Pill (outlined secondary button) */
+  .pill-outline {
+    transition:
+      background-color var(--dur-xs) linear,
+      color var(--dur-xs) linear;
+  }
+  .pill-outline:hover,
+  .pill-outline:focus-visible {
+    background-color: var(--color-ink);
+    color: var(--color-paper);
+  }
+
+  /* Toolbelt words: muted, ink on hover */
+  .toolbelt-word {
+    transition: color var(--dur-xs) linear;
+  }
+  .toolbelt-word:hover {
+    color: var(--color-ink);
+  }
+
+  /* Menu link hover band */
+  .menu-link {
+    transition: background-color var(--dur-xs) linear;
+  }
+  .menu-link:hover,
+  .menu-link:focus-visible {
+    background-color: var(--color-ink-2);
+  }
+
+  /* Static grain overlay (SVG feTurbulence, 5%, multiply) */
+  .grain {
+    position: fixed;
+    inset: 0;
+    z-index: 300;
+    pointer-events: none;
+    opacity: 0.05;
+    mix-blend-mode: multiply;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='240' height='240'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+    background-size: 240px 240px;
+  }
+}
+
+/* ------------------------------------------------------------------ */
+/* Reduced motion: drop the hover transforms, keep colour changes.       */
+/* ------------------------------------------------------------------ */
+@media (prefers-reduced-motion: reduce) {
+  .work-row__title,
+  .work-card__title,
+  .work-card__media,
+  .next-project__title {
+    transition: none;
+    transform: none !important;
+  }
+  .work-card__bar,
+  .arrow-rot,
+  .link-u::before,
+  .link-u::after,
+  .link-h::after,
+  .work-row__wipe {
+    transition-duration: 0s !important;
+    transition-delay: 0s !important;
+  }
+}
+
+/* Mega size capped by viewport so long single words (NOCTURNE) never break mid-word. */
+@utility text-mega-fit {
+  font-size: min(var(--text-mega), 17.5vw);
+}
+
+/* ------------------------------------------------------------------ */
+/* Motion layer (ANIMATION agent)                                       */
+/* ------------------------------------------------------------------ */
+
+/* Lenis (mirrors lenis/dist/lenis.css) */
+html.lenis,
+html.lenis body {
+  height: auto;
+}
+.lenis:not(.lenis-autoToggle).lenis-stopped {
+  overflow: clip;
+}
+.lenis [data-lenis-prevent] {
+  overscroll-behavior: contain;
+}
+.lenis.lenis-smooth iframe {
+  pointer-events: none;
+}
+
+/*
+ * Pre-hydration gate. html.js-anim is added by the inline boot script (layout.tsx) and removed
+ * again by a failsafe if the animation runtime has not booted, so content is never stranded.
+ * Only the intro elements (above the fold) are hidden here; scroll reveals are hidden by JS.
+ */
+@media (prefers-reduced-motion: no-preference) {
+  html.js-anim [data-intro] [data-anim="fade-up"],
+  html.js-anim [data-intro] [data-hero-stack] > li,
+  html.js-anim [data-intro] [data-work-count] {
+    opacity: 0;
+  }
+  html.js-anim [data-intro] [data-anim^="split-"] {
+    visibility: hidden;
+  }
+  html.js-anim [data-intro] [data-anim="rule"] {
+    transform: scaleX(0);
+  }
+  html.js-anim [data-intro] [data-anim="clip-reveal"] {
+    clip-path: inset(100% 0 0 0);
+  }
+
+  /* First-visit preloader: ink cover painted before hydration (the Preloader takes over). */
+  html.preload::after {
+    content: "";
+    position: fixed;
+    inset: 0;
+    z-index: 199;
+    background: var(--color-ink);
+  }
+
+  /* Status dot pulse ring (§5.4 step 6) */
+  [data-status-dot-ring] {
+    animation: status-pulse 1.6s cubic-bezier(0.33, 1, 0.68, 1) infinite;
+  }
+  /* SCROLL ↓ bob (§5.4 step 7) */
+  [data-scroll-cue] {
+    animation: scroll-bob 1.4s ease-in-out infinite;
+  }
+  /* Clock colons (§5.8) */
+  [data-clock-colon] {
+    animation: colon-blink 1s steps(1, end) infinite;
+  }
+}
+
+@keyframes status-pulse {
+  0% {
+    transform: scale(1);
+    opacity: 0.6;
+  }
+  100% {
+    transform: scale(1.8);
+    opacity: 0;
+  }
+}
+@keyframes scroll-bob {
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(6px);
+  }
+}
+@keyframes colon-blink {
+  0% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.3;
+  }
+}
+
+/* NextProject peek (§5.11): hidden behind a clip until hover/focus on fine pointers. */
+@media (hover: hover) and (pointer: fine) and (prefers-reduced-motion: no-preference) {
+  html.js-anim .next-project [data-next-peek] {
+    clip-path: inset(0 0 0 100%);
+    transition: clip-path 0.7s var(--ease-out-expo);
+  }
+  html.js-anim .next-project [data-next-peek-inner] {
+    transform: scale(1.2);
+    transition: transform 0.9s var(--ease-out-expo);
+  }
+  html.js-anim .next-project:hover [data-next-peek],
+  html.js-anim .next-project:focus-visible [data-next-peek] {
+    clip-path: inset(0);
+  }
+  html.js-anim .next-project:hover [data-next-peek-inner],
+  html.js-anim .next-project:focus-visible [data-next-peek-inner] {
+    transform: scale(1);
+  }
+}
+
+/* Magnetic CTA static swap (hover / keyboard focus). Unlayered on purpose: inside
+   @layer components it lost to the bg-signal / text-ink utilities and never applied. */
+.magnetic {
+  transition:
+    background-color var(--dur-xs) linear,
+    color var(--dur-xs) linear;
+}
+.magnetic:hover,
+.magnetic:focus-visible {
+  background-color: var(--color-ink);
+  color: var(--color-paper);
+}
+.on-ink .magnetic:hover,
+.on-ink .magnetic:focus-visible {
+  background-color: var(--color-paper);
+  color: var(--color-ink);
+}
+/* Magnetic button: where magnetism runs, the ink disc (from the pointer entry point) replaces
+   the CSS colour swap on hover. Keyboard focus keeps the static swap. */
+.magnetic[data-magnetic-ready]:hover {
+  background-color: var(--color-signal);
+  color: var(--color-ink);
+}
+.magnetic[data-magnetic-ready] [data-magnetic-inner] {
+  transition: color var(--dur-xs) linear;
+}
+.magnetic[data-magnetic-ready].is-filled [data-magnetic-inner] {
+  color: var(--color-paper);
+}
