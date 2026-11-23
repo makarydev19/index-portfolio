@@ -115,8 +115,8 @@ export const site = {
         art: "lumen",
         alt: "Abstract cover for Lumen Atelier: charcoal arched windows framing a terracotta sun on warm off-white.",
       },
-      liveUrl: "#", // PLACEHOLDER: live URL — fill in after this project is deployed
-      sourceUrl: "#", // PLACEHOLDER: repository URL (or remove the field to hide "Source")
+      liveUrl: "https://lumen-atelier-nu-nine.vercel.app",
+      sourceUrl: "https://github.com/makarydev19/lumen-atelier",
       summary: "An editorial site for an interiors studio, paced like a printed monograph.",
       intro:
         "Lumen Atelier is a fictional architecture and interiors studio whose work is about light, proportion and restraint. The site had to feel like turning the pages of a monograph — calm, warm and unhurried — while still showing off a dense project archive.",
@@ -163,8 +163,8 @@ export const site = {
         art: "kodo",
         alt: "Abstract cover for Kōdo Coffee: a cream coffee bag with orange steam on espresso brown.",
       },
-      liveUrl: "#", // PLACEHOLDER: live URL — fill in after this project is deployed
-      sourceUrl: "#", // PLACEHOLDER: repository URL (or remove the field to hide "Source")
+      liveUrl: "https://kodo-coffee.vercel.app",
+      sourceUrl: "https://github.com/makarydev19/kodo-coffee",
       summary: "A playful product story for a specialty roaster, from farm to cart.",
       intro:
         "Kōdo is a fictional specialty coffee roaster. The goal was a landing page that sells a bag of beans the way a good barista does — with origin stories, flavour and a little theatre — and then gets out of the way at checkout.",
@@ -211,8 +211,8 @@ export const site = {
         art: "nocturne",
         alt: "Abstract cover for NOCTURNE: acid-lime equaliser bars glitching over an ultraviolet glow.",
       },
-      liveUrl: "#", // PLACEHOLDER: live URL — fill in after this project is deployed
-      sourceUrl: "#", // PLACEHOLDER: repository URL (or remove the field to hide "Source")
+      liveUrl: "https://nocturne-festival.vercel.app",
+      sourceUrl: "https://github.com/makarydev19/nocturne-festival",
       summary: "A loud, kinetic site for a night-time electronic music festival.",
       intro:
         "NOCTURNE is a fictional three-night electronic festival. The site needed to feel like the first ten seconds of a set — loud, fast, slightly dangerous — while still selling tickets and answering practical questions.",
@@ -260,8 +260,8 @@ export const site = {
         art: "vanta",
         alt: "Abstract cover for VANTA: a silver hypercar silhouette crossed by a cyan light sweep on graphite.",
       },
-      liveUrl: "#", // PLACEHOLDER: live URL — fill in after this project is deployed
-      sourceUrl: "#", // PLACEHOLDER: repository URL (or remove the field to hide "Source")
+      liveUrl: "https://vanta-ev.vercel.app",
+      sourceUrl: "https://github.com/makarydev19/vanta-ev",
       summary: "A cinematic launch for an electric hypercar concept, engineered in SVG.",
       intro:
         "VANTA is a fictional electric hypercar concept. Without photography or 3D files, the challenge was to make a car launch feel cinematic using only vector shapes, light and timing.",
